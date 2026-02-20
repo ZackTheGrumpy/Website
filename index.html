@@ -146,11 +146,32 @@
       <div id="about-view" class="view-section" style="display: none;">
         <div class="page-content-wrapper">
 
+          <!-- Interactive Preview Gallery -->
+          <section class="about-section preview-gallery-section">
+            <h2 style="text-align: center; border: none; margin-bottom: 32px;">✨ App Preview</h2>
+            <div class="preview-gallery" id="previewGallery">
+              <div class="preview-card preview-left" data-index="0" onclick="rotateGallery('left')">
+                <img src="https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/preview1.png"
+                  alt="Preview 1">
+              </div>
+              <div class="preview-card preview-center" data-index="1">
+                <img src="https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/preview2.png"
+                  alt="Preview 2">
+              </div>
+              <div class="preview-card preview-right" data-index="2" onclick="rotateGallery('right')">
+                <img src="https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/preview3.png"
+                  alt="Preview 3">
+              </div>
+            </div>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 24px;">Click the
+              side cards to browse</p>
+          </section>
+
           <!-- What's Inside -->
           <section class="about-section">
             <h2>What's Inside the Package? 📦</h2>
             <ul class="about-list">
-              <li>🔓 Steam Unlock ONENNABE software</li>
+              <li>Steam Unlock ONENNABE software</li>
               <li>Activation tiers by SteamID (1 / 2 / 3 IDs per key)</li>
               <li>Auto online patch and auto bypass for protected games</li>
               <li>Unlimited re-activations for the same SteamID(s)</li>
@@ -159,7 +180,7 @@
               <li>32,000+ Game &amp; DLC entries supported</li>
               <li>Denuvo-protected titles: limited support — borrow our account for activation</li>
               <li>18+ &amp; VR titles support (on request)</li>
-              <li>✨ Sleek new UI — Clean. Modern. Stylish.</li>
+              <li>Sleek new UI — Clean. Modern. Stylish.</li>
               <li>Auto game updates — stay ahead with no manual hassle</li>
             </ul>
             <p class="about-note">* Support scope varies by title/platform and key type.</p>
@@ -242,12 +263,12 @@
           <section class="about-section">
             <h2>🏆 Why Us (vs others)?</h2>
             <ul class="about-list about-why">
-              <li>✅ Achievements supported (where applicable)</li>
-              <li>✅ Fast and reliable support</li>
-              <li>✅ Detailed tips and tutorials provided</li>
-              <li>✅ Game requests accepted and fulfilled within hours</li>
-              <li>✅ Auto Steamless to remove Steam DRM (error 60005432 / error 54)</li>
-              <li>✅ Auto online patch built directly into the app</li>
+              <li> Achievements supported (where applicable)</li>
+              <li> Fast and reliable support</li>
+              <li> Detailed tips and tutorials provided</li>
+              <li> Game requests accepted and fulfilled within hours</li>
+              <li> Auto Steamless to remove Steam DRM (error 60005432 / error 54)</li>
+              <li> Auto online patch built directly into the app</li>
             </ul>
           </section>
 
@@ -290,6 +311,35 @@
   </div>
 
   <script type="module" src="/src/main.ts"></script>
+
+  <script>
+    // Preview Gallery Rotation
+    const previewImages = [
+      'https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/preview1.png',
+      'https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/preview2.png',
+      'https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/preview3.png'
+    ];
+    let galleryIndex = 1; // center starts at index 1
+
+    function rotateGallery(direction) {
+      if (direction === 'left') {
+        galleryIndex = (galleryIndex - 1 + previewImages.length) % previewImages.length;
+      } else {
+        galleryIndex = (galleryIndex + 1) % previewImages.length;
+      }
+
+      const leftIdx = (galleryIndex - 1 + previewImages.length) % previewImages.length;
+      const centerIdx = galleryIndex;
+      const rightIdx = (galleryIndex + 1) % previewImages.length;
+
+      const cards = document.querySelectorAll('.preview-card');
+      if (cards.length < 3) return;
+
+      cards[0].querySelector('img').src = previewImages[leftIdx];
+      cards[1].querySelector('img').src = previewImages[centerIdx];
+      cards[2].querySelector('img').src = previewImages[rightIdx];
+    }
+  </script>
 </body>
 
 </html>

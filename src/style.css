@@ -1036,3 +1036,76 @@ body {
 .about-table tbody tr:hover {
   background: rgba(255, 255, 255, 0.04);
 }
+
+/* ==========================
+   Preview Gallery (About Us)
+   ========================== */
+.preview-gallery-section {
+  padding-bottom: 16px;
+}
+
+.preview-gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 340px;
+  perspective: 1200px;
+}
+
+.preview-card {
+  position: absolute;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.45s ease, opacity 0.45s ease;
+  cursor: pointer;
+}
+
+.preview-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Center card — largest, front, not clickable */
+.preview-center {
+  width: 340px;
+  height: 300px;
+  transform: translateX(0) scale(1) rotateY(0deg);
+  z-index: 10;
+  cursor: default;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* Left card */
+.preview-left {
+  width: 260px;
+  height: 230px;
+  transform: translateX(-300px) scale(0.85) rotateY(18deg);
+  z-index: 5;
+  opacity: 0.65;
+}
+
+.preview-left:hover {
+  opacity: 0.9;
+  transform: translateX(-290px) scale(0.88) rotateY(14deg);
+}
+
+/* Right card */
+.preview-right {
+  width: 260px;
+  height: 230px;
+  transform: translateX(300px) scale(0.85) rotateY(-18deg);
+  z-index: 5;
+  opacity: 0.65;
+}
+
+.preview-right:hover {
+  opacity: 0.9;
+  transform: translateX(290px) scale(0.88) rotateY(-14deg);
+}
