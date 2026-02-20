@@ -1049,7 +1049,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 340px;
+  height: 320px;
   perspective: 1200px;
 }
 
@@ -1072,40 +1072,40 @@ body {
   user-select: none;
 }
 
-/* Center card — largest, front, not clickable */
+/* Center card — largest, front, not clickable — 16:9 */
 .preview-center {
-  width: 340px;
-  height: 300px;
+  width: 480px;
+  height: 270px;
   transform: translateX(0) scale(1) rotateY(0deg);
   z-index: 10;
   cursor: default;
   box-shadow: 0 16px 60px rgba(0, 0, 0, 0.7);
 }
 
-/* Left card */
+/* Left card — 16:9 */
 .preview-left {
-  width: 260px;
-  height: 230px;
-  transform: translateX(-300px) scale(0.85) rotateY(18deg);
+  width: 340px;
+  height: 191px;
+  transform: translateX(-400px) scale(0.85) rotateY(18deg);
   z-index: 5;
   opacity: 0.65;
 }
 
 .preview-left:hover {
   opacity: 0.9;
-  transform: translateX(-290px) scale(0.88) rotateY(14deg);
+  transform: translateX(-390px) scale(0.88) rotateY(14deg);
 }
 
-/* Right card */
+/* Right card — 16:9 */
 .preview-right {
-  width: 260px;
-  height: 230px;
-  transform: translateX(300px) scale(0.85) rotateY(-18deg);
+  width: 340px;
+  height: 191px;
+  transform: translateX(400px) scale(0.85) rotateY(-18deg);
   z-index: 5;
   opacity: 0.65;
 }
 
 .preview-right:hover {
   opacity: 0.9;
-  transform: translateX(290px) scale(0.88) rotateY(-14deg);
+  transform: translateX(390px) scale(0.88) rotateY(-14deg);
 }
