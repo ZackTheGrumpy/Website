@@ -90,15 +90,15 @@ function renderGamesList(games: ApiGame[]) {
     img.alt = game.name;
     img.loading = 'lazy';
 
-    // Handle broken images by falling back to a GitHub backup, then a placeholder
+    // Handle broken images: Steam CDN → GitHub backup → placeholder
+    let fallbackAttempted = false;
     img.onerror = function () {
-      const backupUrl = `https://barryhamsy.github.io/gamelist/${game.appid}.jpg`;
-      const placeholderUrl = `https://placehold.co/600x900/101820/fff?text=${encodeURIComponent(game.name)}`;
-
-      if (img.src !== backupUrl && img.src !== placeholderUrl) {
-        img.src = backupUrl;
-      } else if (img.src === backupUrl) {
-        img.src = placeholderUrl;
+      if (!fallbackAttempted) {
+        fallbackAttempted = true;
+        img.src = `https://barryhamsy.github.io/gamelist/${game.appid}.jpg`;
+      } else {
+        img.onerror = null; // stop further errors
+        img.src = `https://barryhamsy.github.io/gamelist/placeholder.jpg`;
       }
     };
 

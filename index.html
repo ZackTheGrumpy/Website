@@ -3,9 +3,10 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/x-icon"
+    href="https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/logo.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Steam Library Clone</title>
+  <title>SUO - Wannabe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,47 +15,15 @@
 <body>
   <div id="app">
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <div class="home-dropdown">
-          <span>Home</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-            <path d="M7 10l5 5 5-5z"></path>
-          </svg>
-        </div>
-        <div class="window-controls">
-          <button class="grid-view active">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path
-                d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z">
-              </path>
-            </svg>
-          </button>
-        </div>
+      <div class="sidebar-header"
+        style="height: auto; padding: 16px 16px 8px 16px; border-bottom: none; justify-content: center;">
+        <img src="https://raw.githubusercontent.com/ZackTheGrumpy/Website/refs/heads/main/SUO_logo.png"
+          alt="SUO - Wannabe Logo" style="max-width: 100%; height: auto; display: block;">
       </div>
 
-      <div class="sidebar-tools">
-        <div class="category-dropdown">
-          <span>Games and Software</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-            <path d="M7 10l5 5 5-5z"></path>
-          </svg>
-        </div>
-        <div class="filter-icons">
-          <button><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-              <path d="M12 4v16m8-8H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg></button>
-          <button><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-              <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg></button>
-          <button><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-              <path d="M12 22A10 10 0 1012 2a10 10 0 000 20zm-5-9a5 5 0 1110 0" stroke="currentColor" stroke-width="2"
-                fill="none" />
-            </svg></button>
-        </div>
-      </div>
 
-      <div class="search-bar-container">
+
+      <div class="search-bar-container" style="padding-top: 16px;">
         <div class="search-input-wrapper">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="search-icon">
             <path
@@ -176,11 +145,112 @@
       <!-- ABOUT US VIEW -->
       <div id="about-view" class="view-section" style="display: none;">
         <div class="page-content-wrapper">
-          <h2>About Us</h2>
-          <p class="about-text">
-            Welcome to Steam Unlock Onennabe. Our goal is to provide accessible, high-quality game alternatives with
-            lifetime and monthly plans tailored to your needs.
-          </p>
+
+          <!-- What's Inside -->
+          <section class="about-section">
+            <h2>What's Inside the Package? 📦</h2>
+            <ul class="about-list">
+              <li>🔓 Steam Unlock ONENNABE software</li>
+              <li>Activation tiers by SteamID (1 / 2 / 3 IDs per key)</li>
+              <li>Auto online patch and auto bypass for protected games</li>
+              <li>Unlimited re-activations for the same SteamID(s)</li>
+              <li>Super lightweight software</li>
+              <li>No malware. No data harvesting — we respect your privacy</li>
+              <li>32,000+ Game &amp; DLC entries supported</li>
+              <li>Denuvo-protected titles: limited support — borrow our account for activation</li>
+              <li>18+ &amp; VR titles support (on request)</li>
+              <li>✨ Sleek new UI — Clean. Modern. Stylish.</li>
+              <li>Auto game updates — stay ahead with no manual hassle</li>
+            </ul>
+            <p class="about-note">* Support scope varies by title/platform and key type.</p>
+          </section>
+
+          <!-- Featured Series -->
+          <section class="about-section">
+            <h2>🎮 Featured Series You'll Love</h2>
+            <ul class="about-list">
+              <li>Call of Duty (BO1–3, MW2–MW3, classics)</li>
+              <li>Grand Theft Auto Collection (GTA V &amp; classics)</li>
+              <li>Watch Dogs • Assassin's Creed • Far Cry</li>
+              <li>Red Dead Redemption 1 &amp; 2 • Star Wars Jedi</li>
+              <li>Many online games supported via Spacewar online patch — play with friends!</li>
+              <li>…and much more! 🚀</li>
+            </ul>
+          </section>
+
+          <!-- Package Comparison Table -->
+          <section class="about-section">
+            <h2>📊 Package Comparison</h2>
+            <div class="about-table-wrapper">
+              <table class="about-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Monthly</th>
+                    <th>Lifetime</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SteamID Binding</td>
+                    <td>1 SteamID per CD Key</td>
+                    <td>1 / 2 / 3 SteamIDs per CD Key (plan-based)</td>
+                  </tr>
+                  <tr>
+                    <td>Validity</td>
+                    <td>1 Month</td>
+                    <td>Forever</td>
+                  </tr>
+                  <tr>
+                    <td>Re-activations</td>
+                    <td>Unlimited (same SteamID)</td>
+                    <td>Unlimited (same SteamID(s))</td>
+                  </tr>
+                  <tr>
+                    <td>Denuvo Games</td>
+                    <td>Not Supported</td>
+                    <td>Limited Support (not all titles)</td>
+                  </tr>
+                  <tr>
+                    <td>Online Patch &amp; Bypass</td>
+                    <td>Not Available</td>
+                    <td>Available</td>
+                  </tr>
+                  <tr>
+                    <td>Hardware Lock</td>
+                    <td>No (change PC freely)</td>
+                    <td>No (change PC freely)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Limitations -->
+          <section class="about-section">
+            <h2>⚠️ Limitations</h2>
+            <ul class="about-list about-limitations">
+              <li>EA App / Blizzard live-service titles are not supported unless a patch is available</li>
+              <li>Ubisoft titles not supported unless a specific patch is available</li>
+              <li>Games with online checks not supported unless a server emulator bypass exists</li>
+              <li>The Enigma Protector DRM is not supported</li>
+              <li>Denuvo games depend on availability on our end</li>
+            </ul>
+          </section>
+
+          <!-- Why Us -->
+          <section class="about-section">
+            <h2>🏆 Why Us (vs others)?</h2>
+            <ul class="about-list about-why">
+              <li>✅ Achievements supported (where applicable)</li>
+              <li>✅ Fast and reliable support</li>
+              <li>✅ Detailed tips and tutorials provided</li>
+              <li>✅ Game requests accepted and fulfilled within hours</li>
+              <li>✅ Auto Steamless to remove Steam DRM (error 60005432 / error 54)</li>
+              <li>✅ Auto online patch built directly into the app</li>
+            </ul>
+          </section>
+
         </div>
       </div>
 
@@ -205,9 +275,9 @@
     target="_blank" class="whatsapp-btn">💬 WhatsApp Us</a>
 
   <!-- Floating Purchase CTA -->
-  <a href="https://www.paypal.com/ncp/payment/HXJHP8F87YQC6" target="_blank" class="purchase-link" id="purchaseCta">
+  <a href="https://wise.com/pay/me/barryh669" target="_blank" class="purchase-link" id="purchaseCta">
     <div class="purchase-main">Purchase App</div>
-    <div class="purchase-sub">Unlock them all!</div>
+    <div class="purchase-sub">Pay via WISE</div>
   </a>
 
   <!-- Manual receipt mini prompt -->
