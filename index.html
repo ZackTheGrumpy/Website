@@ -47,12 +47,18 @@
     <main class="main-content">
       <!-- Top Navigation Bar -->
       <header class="top-nav">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
         <div class="nav-links">
           <a href="#" class="nav-link active" data-target="home-view">Catalogue</a>
           <a href="#" class="nav-link" data-target="purchase-view">Purchase</a>
           <a href="#" class="nav-link" data-target="about-view">About Us</a>
         </div>
       </header>
+
+      <!-- Mobile sidebar backdrop -->
+      <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
       <!-- Scrolling Ticker Banner -->
       <div class="ticker-banner">
@@ -302,6 +308,17 @@
 
     </main>
 
+    <!-- Mobile-only Action Bar (above pagination) -->
+    <div class="mobile-action-bar">
+      <a href="https://wise.com/pay/me/barryh669" target="_blank" class="mobile-action-btn mobile-action-purchase">
+        💳 Purchase App
+      </a>
+      <a href="https://wa.me/60138254541?text=Hi%20Barry,%20I%20am%20interested%20in%20Steam%20Unlock%20Onennabe!"
+        target="_blank" class="mobile-action-btn mobile-action-whatsapp">
+        💬 WhatsApp Us
+      </a>
+    </div>
+
     <div id="pagination-container" class="pagination-container">
       <!-- Pagination controls injected here -->
     </div>
@@ -364,6 +381,42 @@
       cards[1].querySelector('img').src = previewImages[centerIdx];
       cards[2].querySelector('img').src = previewImages[rightIdx];
     }
+
+    // Mobile Hamburger Toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebar = document.querySelector('.sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+
+    function openSidebar() {
+      sidebar.classList.add('mobile-open');
+      backdrop.classList.add('visible');
+      hamburgerBtn.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('mobile-open');
+      backdrop.classList.remove('visible');
+      hamburgerBtn.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburgerBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('mobile-open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar when a nav link is clicked on mobile
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) closeSidebar();
+      });
+    });
   </script>
 </body>
 

@@ -174,7 +174,7 @@ function renderPaginationControls() {
 
   // First / Prev
   const firstBtn = document.createElement('button');
-  firstBtn.className = 'pagination-btn';
+  firstBtn.className = 'pagination-btn pagination-btn-desktop';
   firstBtn.textContent = 'First';
   firstBtn.disabled = currentPage === 1;
   firstBtn.onclick = () => goToPage(1);
@@ -201,7 +201,7 @@ function renderPaginationControls() {
 
   for (let i = startPage; i <= endPage; i++) {
     const pageBtn = document.createElement('button');
-    pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+    pageBtn.className = `pagination-btn pagination-btn-desktop ${i === currentPage ? 'active' : ''}`;
     pageBtn.textContent = i.toString();
     pageBtn.onclick = () => goToPage(i);
     container.appendChild(pageBtn);
@@ -215,7 +215,7 @@ function renderPaginationControls() {
   nextBtn.onclick = () => goToPage(currentPage + 1);
 
   const lastBtn = document.createElement('button');
-  lastBtn.className = 'pagination-btn';
+  lastBtn.className = 'pagination-btn pagination-btn-desktop';
   lastBtn.textContent = 'Last';
   lastBtn.disabled = currentPage === totalPages;
   lastBtn.onclick = () => goToPage(totalPages);
@@ -225,6 +225,7 @@ function renderPaginationControls() {
 
   // Jump to input
   const inputWrapper = document.createElement('div');
+  inputWrapper.className = 'pagination-btn-desktop';
   inputWrapper.style.marginLeft = '16px';
   inputWrapper.style.display = 'flex';
   inputWrapper.style.alignItems = 'center';
