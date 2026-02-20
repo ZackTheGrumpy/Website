@@ -424,13 +424,38 @@ async function initApp() {
   // Setup plan tracking & WhatsApp CTA logic
   setupPaymentTracking();
 
+
+
   // Listen to search input typing
   if (searchInput) {
     searchInput.addEventListener('input', handleSearch);
   }
 
-  // Show loading state
-  gameGrid.innerHTML = '<div style="color: white; padding: 20px;">Loading games...</div>';
+  // Show loading state (Skeleton)
+  const gameList = document.getElementById('game-list')!;
+  gameGrid.innerHTML = '';
+  gameList.innerHTML = '';
+
+  for (let i = 0; i < 24; i++) {
+    const card = document.createElement('div');
+    card.className = 'skeleton-card skeleton';
+    gameGrid.appendChild(card);
+  }
+
+  for (let i = 0; i < 20; i++) {
+    const li = document.createElement('div');
+    li.className = 'list-item skeleton-sidebar-item';
+
+    const icon = document.createElement('div');
+    icon.className = 'skeleton-sidebar-icon skeleton';
+
+    const text = document.createElement('div');
+    text.className = 'skeleton-sidebar-text skeleton';
+
+    li.appendChild(icon);
+    li.appendChild(text);
+    gameList.appendChild(li);
+  }
 
   allGames = await fetchGames();
   filteredGames = allGames;
