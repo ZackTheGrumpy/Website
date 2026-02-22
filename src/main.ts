@@ -78,7 +78,10 @@ function applyFilters() {
     if (filterOnline && game.online_supported !== 'Yes') return false;
     if (filterBypass && game.bypass_supported !== 'Yes') return false;
     if (filterDenuvo && !game.requires_membership) return false;
-    if (activeGenreIds && game.primary_genre && !activeGenreIds.has(game.primary_genre)) return false;
+    if (activeGenreIds) {
+      const gId = game.primary_genre || "0";
+      if (!activeGenreIds.has(gId)) return false;
+    }
     return true;
   });
   if (sortByDownloads) {
@@ -432,7 +435,7 @@ function setupFilters() {
   // Removed immediate append: genreContainer.appendChild(denuvoBtn);
 
   // Skeleton placeholders while data loads
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 16; i++) {
     const sk = document.createElement('div');
     sk.className = 'filter-genre-skeleton skeleton';
     genreContainer.appendChild(sk);
@@ -479,8 +482,9 @@ function pruneGenreButtons() {
 
   const presentLabels = new Set<string>();
   allGames.forEach(g => {
-    if (g.primary_genre && STEAM_GENRES[g.primary_genre]) {
-      presentLabels.add(STEAM_GENRES[g.primary_genre]);
+    const gId = g.primary_genre || "0";
+    if (STEAM_GENRES[gId]) {
+      presentLabels.add(STEAM_GENRES[gId]);
     }
   });
 
