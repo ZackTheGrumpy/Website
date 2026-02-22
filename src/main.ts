@@ -1,5 +1,30 @@
 import './style.css'
 
+const STEAM_GENRES: Record<string, string> = {
+  "1": "Action",
+  "2": "Strategy",
+  "3": "RPG",
+  "4": "Casual",
+  "9": "Racing",
+  "18": "Sports",
+  "23": "Indie",
+  "25": "Adventure",
+  "28": "Simulation",
+  "29": "Massively Multiplayer",
+  "37": "Free to Play",
+  "50": "Early Access",
+  "51": "Animation & Modeling",
+  "52": "Audio Production",
+  "53": "Design & Illustration",
+  "54": "Education",
+  "55": "Photo Editing",
+  "56": "Software Training",
+  "57": "Utilities",
+  "58": "Video Production",
+  "59": "Web Publishing",
+  "60": "Game Development"
+};
+
 interface ApiGame {
   added_on: string;
   appid: string;
@@ -113,11 +138,34 @@ function renderGamesList(games: ApiGame[]) {
     imgWrapper.appendChild(img);
     imgWrapper.appendChild(overlay);
 
-    // AppID Tag (Top Left)
+    // Genre Tag (Top Right)
     const appIdTag = document.createElement('div');
     appIdTag.className = 'badge-appid';
-    appIdTag.textContent = game.appid;
-    imgWrapper.appendChild(appIdTag);
+    const genreLabel = game.primary_genre ? (STEAM_GENRES[game.primary_genre] ?? `#${game.primary_genre}`) : null;
+    if (genreLabel) {
+      appIdTag.textContent = genreLabel;
+      imgWrapper.appendChild(appIdTag);
+    }
+
+    // Support Badges (Top Left, stacked)
+    const supportBadgesWrap = document.createElement('div');
+    supportBadgesWrap.className = 'badge-support-stack';
+
+    if (game.online_supported === 'Yes') {
+      const b = document.createElement('div');
+      b.className = 'badge-support badge-online';
+      b.textContent = 'Online Supported';
+      supportBadgesWrap.appendChild(b);
+    }
+    if (game.bypass_supported === 'Yes') {
+      const b = document.createElement('div');
+      b.className = 'badge-support badge-bypass';
+      b.textContent = 'Bypass Supported';
+      supportBadgesWrap.appendChild(b);
+    }
+    if (supportBadgesWrap.childElementCount > 0) {
+      imgWrapper.appendChild(supportBadgesWrap);
+    }
 
     // Badges
     if (game.new) {
@@ -127,22 +175,10 @@ function renderGamesList(games: ApiGame[]) {
       imgWrapper.appendChild(demoBadge);
     }
 
-    if (game.size_gb) {
-      const diskBadge = document.createElement('div');
-      diskBadge.className = 'badge-disk';
-      diskBadge.innerHTML = `<span>${game.size_gb}</span>`;
-      imgWrapper.appendChild(diskBadge);
-    } else if (game.downloads > 0) {
-      const badge = document.createElement('div');
-      badge.className = 'badge-disk';
-      badge.style.borderRadius = '50%';
-      badge.style.width = '24px';
-      badge.style.height = '24px';
-      badge.style.justifyContent = 'center';
-      badge.style.padding = '0';
-      badge.textContent = game.downloads.toString();
-      imgWrapper.appendChild(badge);
-    }
+    const diskBadge = document.createElement('div');
+    diskBadge.className = 'badge-disk';
+    diskBadge.innerHTML = `<span>${game.appid}</span>`;
+    imgWrapper.appendChild(diskBadge);
 
     card.appendChild(imgWrapper);
 
@@ -150,12 +186,11 @@ function renderGamesList(games: ApiGame[]) {
     card.addEventListener('click', () => {
       navigator.clipboard.writeText(game.appid).then(() => {
         // Optional visual feedback
-        const originalText = appIdTag.textContent;
-        appIdTag.textContent = "Copied!";
-        appIdTag.classList.add('copied');
+        diskBadge.innerHTML = `<span>Copied!</span>`;
+        diskBadge.classList.add('copied');
         setTimeout(() => {
-          appIdTag.textContent = originalText;
-          appIdTag.classList.remove('copied');
+          diskBadge.innerHTML = `<span>${game.appid}</span>`;
+          diskBadge.classList.remove('copied');
         }, 1000);
       });
     });
