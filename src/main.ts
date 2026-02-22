@@ -1,28 +1,39 @@
 import './style.css'
 
 const STEAM_GENRES: Record<string, string> = {
+  "0": "Unknown Genre",
   "1": "Action",
   "2": "Strategy",
   "3": "RPG",
   "4": "Casual",
+  "5": "Strategy",
   "9": "Racing",
+  "10": "MMO",
+  "11": "FPS",
+  "12": "Puzzle",
   "18": "Sports",
   "23": "Indie",
   "25": "Adventure",
   "28": "Simulation",
   "29": "Massively Multiplayer",
-  "37": "Free to Play",
-  "50": "Early Access",
+  "33": "Indie",
+  "34": "Indie",
+  "37": "Free To Play",
+  "50": "Indie",
   "51": "Animation & Modeling",
-  "52": "Audio Production",
-  "53": "Design & Illustration",
+  "52": "Music",
+  "53": "Software & Tools",
   "54": "Education",
-  "55": "Photo Editing",
-  "56": "Software Training",
-  "57": "Utilities",
-  "58": "Video Production",
-  "59": "Web Publishing",
-  "60": "Game Development"
+  "55": "Software & Tools",
+  "57": "Software & Tools",
+  "58": "Software & Tools",
+  "59": "Software & Tools",
+  "60": "Software & Tools",
+  "70": "Early Access",
+  "71": "Sexual Content",
+  "72": "Sexual Content",
+  "73": "Adventure",
+  "74": "Gore"
 };
 
 interface ApiGame {
@@ -45,6 +56,37 @@ let currentPage = 1;
 let allGames: ApiGame[] = [];
 let filteredGames: ApiGame[] = [];
 
+// Filter state
+let activeGenreIds: Set<string> | null = null;
+let filterOnline = false;
+let filterBypass = false;
+let searchQuery = '';
+let sortByDownloads = false;
+let filterDenuvo = false;
+
+// Search settings
+let searchByName = true;
+let searchByAppId = true;
+
+function applyFilters() {
+  filteredGames = allGames.filter(game => {
+    if (searchQuery) {
+      const matchName = searchByName && game.name.toLowerCase().includes(searchQuery);
+      const matchAppId = searchByAppId && game.appid.includes(searchQuery);
+      if (!matchName && !matchAppId) return false;
+    }
+    if (filterOnline && game.online_supported !== 'Yes') return false;
+    if (filterBypass && game.bypass_supported !== 'Yes') return false;
+    if (filterDenuvo && !game.requires_membership) return false;
+    if (activeGenreIds && game.primary_genre && !activeGenreIds.has(game.primary_genre)) return false;
+    return true;
+  });
+  if (sortByDownloads) {
+    filteredGames = [...filteredGames].sort((a, b) => b.downloads - a.downloads);
+  }
+  goToPage(1);
+}
+
 async function fetchGames(): Promise<ApiGame[]> {
   try {
     const response = await fetch('https://gameboxbybear.pythonanywhere.com/api/onennabe');
@@ -65,40 +107,14 @@ function getImageUrl(appid: string): string {
 
 function renderGamesList(games: ApiGame[]) {
   const gameGrid = document.getElementById('game-grid')!;
-  const gameList = document.getElementById('game-list')!;
 
   // Clear previous
   gameGrid.innerHTML = '';
-  gameList.innerHTML = '';
 
   if (games.length === 0) {
     gameGrid.innerHTML = '<div style="color: white; padding: 20px;">No games found.</div>';
     return;
   }
-
-  // Render Sidebar List
-  games.forEach((game, index) => {
-    const el = document.createElement('div');
-    el.className = `list-item ${index === 0 && currentPage === 1 ? 'active' : ''}`;
-
-    // Tiny icon placeholder
-    const icon = document.createElement('img');
-    const color = Math.floor(Math.random() * 16777215).toString(16);
-    icon.src = `https://placehold.co/32x32/${color}/fff?text=${game.name.charAt(0)}`;
-
-    const text = document.createElement('span');
-    text.textContent = game.name;
-
-    // Bolden if it's new
-    if (game.new) {
-      text.style.fontWeight = '700';
-      text.style.color = '#fff';
-    }
-
-    el.appendChild(icon);
-    el.appendChild(text);
-    gameList.appendChild(el);
-  });
 
   // Render Main Grid
   games.forEach(game => {
@@ -130,6 +146,21 @@ function renderGamesList(games: ApiGame[]) {
     // Hover overlay
     const overlay = document.createElement('div');
     overlay.className = 'card-overlay';
+
+    if (game.requires_membership) {
+      const denuvo = document.createElement('span');
+      denuvo.className = 'card-denuvo';
+      denuvo.textContent = 'DENUVO';
+      overlay.appendChild(denuvo);
+    }
+
+    if (game.downloads > 0) {
+      const downloads = document.createElement('span');
+      downloads.className = 'card-downloads';
+      downloads.textContent = `Downloaded: ${game.downloads}`;
+      overlay.appendChild(downloads);
+    }
+
     const title = document.createElement('span');
     title.className = 'card-title';
     title.textContent = game.name;
@@ -312,16 +343,159 @@ function goToPage(page: number) {
 
 function handleSearch(event: Event) {
   const inputElement = event.target as HTMLInputElement;
-  const query = inputElement.value.toLowerCase().trim();
+  searchQuery = inputElement.value.toLowerCase().trim();
+  applyFilters();
+}
 
-  if (!query) {
-    filteredGames = allGames;
-  } else {
-    filteredGames = allGames.filter(game => game.name.toLowerCase().includes(query));
+function setupFilters() {
+  // Support buttons (genre-style)
+  const supportList = document.getElementById('filter-support-list');
+  if (supportList) {
+    const supportOptions = [
+      { label: 'All', online: false, bypass: false },
+      { label: 'Online Supported', online: true, bypass: false },
+      { label: 'Bypass Supported', online: false, bypass: true },
+    ];
+    supportOptions.forEach(({ label, online, bypass }, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-genre-btn' + (i === 0 ? ' active' : '');
+      btn.textContent = label;
+      btn.addEventListener('click', () => {
+        filterOnline = online;
+        filterBypass = bypass;
+        supportList.querySelectorAll('.filter-genre-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      });
+      supportList.appendChild(btn);
+    });
   }
 
-  // Reset to first page of the new result set
-  goToPage(1);
+  // Build genre buttons immediately from the full STEAM_GENRES map
+  const genreContainer = document.getElementById('filter-genre-list');
+  if (!genreContainer) return;
+
+  // Group IDs by their label (deduplicate)
+  const labelToIds = new Map<string, Set<string>>();
+  Object.entries(STEAM_GENRES).forEach(([id, label]) => {
+    if (!labelToIds.has(label)) labelToIds.set(label, new Set());
+    labelToIds.get(label)!.add(id);
+  });
+
+  const sorted = [...labelToIds.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+
+  // "All" button first
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-genre-btn active';
+  allBtn.id = 'genre-btn-all';
+  allBtn.textContent = 'All';
+  allBtn.addEventListener('click', () => {
+    activeGenreIds = null;
+    filterDenuvo = false;
+    genreContainer.querySelectorAll('.filter-genre-btn').forEach(b => b.classList.remove('active'));
+    allBtn.classList.add('active');
+    applyFilters();
+  });
+  genreContainer.appendChild(allBtn);
+
+  // "Most Downloaded" button
+  const mostBtn = document.createElement('button');
+  mostBtn.className = 'filter-genre-btn';
+  mostBtn.textContent = '⬇ Most Downloaded ⬇';
+  mostBtn.id = 'genre-btn-most';
+  mostBtn.style.display = 'none'; // Hide initially for skeleton loop
+  mostBtn.addEventListener('click', () => {
+    sortByDownloads = true;
+    activeGenreIds = null;
+    filterDenuvo = false;
+    genreContainer.querySelectorAll('.filter-genre-btn').forEach(b => b.classList.remove('active'));
+    mostBtn.classList.add('active');
+    applyFilters();
+  });
+  genreContainer.appendChild(mostBtn);
+  allBtn.addEventListener('click', () => { sortByDownloads = false; }, true);
+
+  // "Denuvo" button
+  const denuvoBtn = document.createElement('button');
+  denuvoBtn.className = 'filter-genre-btn';
+  denuvoBtn.textContent = 'Denuvo';
+  denuvoBtn.id = 'genre-btn-denuvo';
+  denuvoBtn.style.display = 'none'; // Hide initially for skeleton loop
+  denuvoBtn.addEventListener('click', () => {
+    sortByDownloads = false;
+    activeGenreIds = null;
+    filterDenuvo = true;
+    genreContainer.querySelectorAll('.filter-genre-btn').forEach(b => b.classList.remove('active'));
+    denuvoBtn.classList.add('active');
+    applyFilters();
+  });
+  // Removed immediate append: genreContainer.appendChild(denuvoBtn);
+
+  // Skeleton placeholders while data loads
+  for (let i = 0; i < 14; i++) {
+    const sk = document.createElement('div');
+    sk.className = 'filter-genre-skeleton skeleton';
+    genreContainer.appendChild(sk);
+  }
+
+  sorted.forEach(([label, ids]) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-genre-btn';
+    btn.textContent = label;
+    btn.dataset.genreLabel = label;
+    // Hide by default — revealed after data loads via pruneGenreButtons
+    btn.style.display = 'none';
+    btn.addEventListener('click', () => {
+      sortByDownloads = false;
+      activeGenreIds = ids;
+      filterDenuvo = false;
+      genreContainer.querySelectorAll('.filter-genre-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    });
+    genreContainer.appendChild(btn);
+
+    // Position Denuvo under Casual
+    if (label === 'Casual') {
+      genreContainer.appendChild(denuvoBtn);
+    }
+  });
+}
+
+// Called after data loads — shows only genre buttons that exist in the catalogue
+function pruneGenreButtons() {
+  const genreContainer = document.getElementById('filter-genre-list');
+  if (!genreContainer) return;
+
+  // Remove skeleton placeholders
+  genreContainer.querySelectorAll('.filter-genre-skeleton').forEach(el => el.remove());
+
+  // Reveal Most Downloaded and Denuvo buttons
+  const mostBtn = document.getElementById('genre-btn-most');
+  if (mostBtn) mostBtn.style.display = '';
+
+  const denuvoBtn = document.getElementById('genre-btn-denuvo');
+  if (denuvoBtn) denuvoBtn.style.display = '';
+
+  const presentLabels = new Set<string>();
+  allGames.forEach(g => {
+    if (g.primary_genre && STEAM_GENRES[g.primary_genre]) {
+      presentLabels.add(STEAM_GENRES[g.primary_genre]);
+    }
+  });
+
+  // Show genre buttons that are present in the data
+  genreContainer.querySelectorAll<HTMLButtonElement>('.filter-genre-btn').forEach(btn => {
+    if (btn.textContent === 'All' || btn.textContent === '⬇ Most Downloaded ⬇' || btn.textContent === 'Denuvo') {
+      return; // Keep All, Most Downloaded, and Denuvo visible
+    }
+    const label = btn.textContent!;
+    if (presentLabels.has(label)) {
+      btn.style.display = ''; // Show button
+    } else {
+      btn.remove(); // Remove button if genre is not present
+    }
+  });
 }
 
 function setupNavigation() {
@@ -448,6 +622,46 @@ function setupPaymentTracking() {
   }
 }
 
+function setupSearchSettings() {
+  const btn = document.getElementById('searchSettingsBtn');
+  const dropdown = document.getElementById('searchSettingsDropdown');
+  const nameToggle = document.getElementById('searchNameToggle') as HTMLInputElement;
+  const appIdToggle = document.getElementById('searchAppIdToggle') as HTMLInputElement;
+
+  if (!btn || !dropdown || !nameToggle || !appIdToggle) return;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('active');
+  });
+
+  document.addEventListener('click', () => {
+    dropdown.classList.remove('active');
+  });
+
+  dropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  nameToggle.addEventListener('change', () => {
+    if (!nameToggle.checked && !appIdToggle.checked) {
+      nameToggle.checked = true;
+    }
+    searchByName = nameToggle.checked;
+    searchByAppId = appIdToggle.checked;
+    applyFilters();
+  });
+
+  appIdToggle.addEventListener('change', () => {
+    if (!appIdToggle.checked && !nameToggle.checked) {
+      nameToggle.checked = true;
+    }
+    searchByName = nameToggle.checked;
+    searchByAppId = appIdToggle.checked;
+    applyFilters();
+  });
+}
+
 async function initApp() {
   const gameGrid = document.getElementById('game-grid')!;
   const scrollToTopBtn = document.getElementById('scroll-to-top')!;
@@ -457,44 +671,33 @@ async function initApp() {
   // Setup routing
   setupNavigation();
 
+  // Setup search settings UI
+  setupSearchSettings();
+
   // Setup plan tracking & WhatsApp CTA logic
   setupPaymentTracking();
-
-
 
   // Listen to search input typing
   if (searchInput) {
     searchInput.addEventListener('input', handleSearch);
   }
 
-  // Show loading state (Skeleton)
-  const gameList = document.getElementById('game-list')!;
-  gameGrid.innerHTML = '';
-  gameList.innerHTML = '';
+  // Wire up filter controls immediately (genre buttons visible during skeleton)
+  setupFilters();
 
+  // Show loading state (Skeleton)
+  gameGrid.innerHTML = '';
   for (let i = 0; i < 24; i++) {
     const card = document.createElement('div');
     card.className = 'skeleton-card skeleton';
     gameGrid.appendChild(card);
   }
 
-  for (let i = 0; i < 20; i++) {
-    const li = document.createElement('div');
-    li.className = 'list-item skeleton-sidebar-item';
-
-    const icon = document.createElement('div');
-    icon.className = 'skeleton-sidebar-icon skeleton';
-
-    const text = document.createElement('div');
-    text.className = 'skeleton-sidebar-text skeleton';
-
-    li.appendChild(icon);
-    li.appendChild(text);
-    gameList.appendChild(li);
-  }
-
   allGames = await fetchGames();
   filteredGames = allGames;
+
+  // Reveal only genre buttons present in catalogue
+  pruneGenreButtons();
 
   // Render initial page
   goToPage(1);
