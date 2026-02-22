@@ -205,7 +205,7 @@ function renderGamesList(games: ApiGame[]) {
     if (game.new) {
       const demoBadge = document.createElement('div');
       demoBadge.className = 'badge-demo';
-      demoBadge.textContent = 'NEW';
+      demoBadge.textContent = '\u00A0\u00A0\u00A0\u00A0\u00A0NEW';
       imgWrapper.appendChild(demoBadge);
     }
 
