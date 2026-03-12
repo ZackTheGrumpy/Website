@@ -92,7 +92,7 @@ function applyFilters() {
 
 async function fetchGames(): Promise<ApiGame[]> {
   try {
-    const response = await fetch('https://gameboxbybear.pythonanywhere.com/api/onennabe');
+    const response = await fetch('https://steamunlockonennabe.duckdns.org/api/onennabe');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
