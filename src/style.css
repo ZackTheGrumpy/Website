@@ -1056,13 +1056,13 @@ body {
   }
 }
 
-.whatsapp-btn {
+.email-btn {
   position: fixed;
   bottom: 120px;
   right: 25px;
   z-index: 2000;
-  background: #25D366;
-  color: #052e16;
+  background: var(--accent-blue, #1a9fff);
+  color: #fff;
   font-weight: 800;
   text-decoration: none;
   padding: 12px 20px;
@@ -1072,13 +1072,13 @@ body {
   transition: all 0.2s ease;
 }
 
-.whatsapp-btn:hover {
-  background: #22c55e;
+.email-btn:hover {
+  background: #0087eb;
   transform: translateY(-2px);
 }
 
 @media (max-width: 480px) {
-  .whatsapp-btn {
+  .email-btn {
     right: 15px;
     bottom: 110px;
   }
@@ -1440,8 +1440,8 @@ body {
   color: #fff;
 }
 
-.mobile-action-whatsapp {
-  background: #25d366;
+.mobile-action-email {
+  background: var(--accent-blue, #1a9fff);
   color: #fff;
 }
 
@@ -1585,7 +1585,7 @@ body {
   }
 
   /* Floating buttons: smaller on mobile */
-  .whatsapp-btn,
+  .email-btn,
   .purchase-link {
     font-size: 0.8rem;
     padding: 10px 14px;
@@ -1613,7 +1613,7 @@ body {
     display: flex;
   }
 
-  .whatsapp-btn,
+  .email-btn,
   .purchase-link {
     display: none !important;
   }

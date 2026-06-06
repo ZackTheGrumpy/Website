@@ -554,18 +554,22 @@ function getReceiptFromURL(): string {
   }
 }
 
-function updateWhatsAppLink(receipt: string, plan: string) {
-  const base = "https://wa.me/60138254541";
+function updateEmailLink(receipt: string, plan: string) {
   const parts: string[] = [];
   if (plan) parts.push(`Plan: ${plan}`);
   if (receipt) parts.push(`Receipt: ${receipt}`);
 
   const info = parts.length ? ` (${parts.join(' | ')})` : '';
-  const msg = `Hi Barry, I am interested in Steam Unlock Onennabe${info}.`;
+  const body = `Hi, I am interested in Steam Unlock Onennabe${info}.`;
+  const subject = "Steam Unlock Onennabe Inquiry";
+  const email = "3circledesign@gmail.com";
 
-  const url = base + "?text=" + encodeURIComponent(msg);
-  const a = document.getElementById('whatsappBtn') as HTMLAnchorElement;
+  const url = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const a = document.getElementById('emailBtn') as HTMLAnchorElement;
   if (a) a.href = url;
+
+  const aMobile = document.getElementById('emailBtnMobile') as HTMLAnchorElement;
+  if (aMobile) aMobile.href = url;
 }
 
 function showReceiptToast() {
@@ -600,10 +604,10 @@ function setupPaymentTracking() {
     localStorage.setItem('lastReceipt', receipt);
   }
 
-  // Update WhatsApp link based on cache
+  // Update Email link based on cache
   const knownReceipt = localStorage.getItem('lastReceipt') || '';
   const knownPlan = localStorage.getItem('lastPlan') || '';
-  updateWhatsAppLink(knownReceipt, knownPlan);
+  updateEmailLink(knownReceipt, knownPlan);
 
   // Show receipt toast prompt if they picked a plan but haven't provided a receipt
   if (knownPlan && !knownReceipt && !localStorage.getItem('receiptPromptShown')) {
@@ -619,7 +623,7 @@ function setupPaymentTracking() {
       const r = (input?.value || '').trim();
       if (r) {
         localStorage.setItem('lastReceipt', r);
-        updateWhatsAppLink(r, localStorage.getItem('lastPlan') || '');
+        updateEmailLink(r, localStorage.getItem('lastPlan') || '');
         hideReceiptToast();
       }
     });
@@ -678,7 +682,7 @@ async function initApp() {
   // Setup search settings UI
   setupSearchSettings();
 
-  // Setup plan tracking & WhatsApp CTA logic
+  // Setup plan tracking & Email CTA logic
   setupPaymentTracking();
 
   // Listen to search input typing

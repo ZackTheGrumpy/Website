@@ -145,9 +145,10 @@
                     style="margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
                     Payment</h3>
 
-
-
                   <div id="paypal-container-HXJHP8F87YQC6"></div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 24px; line-height: 1.4; text-align: center;">
+                    * Disclaimer: We do not serve customers from other resellers.
+                  </div>
                 </div>
               </div>
 
@@ -315,6 +316,7 @@
               <li>Games with online checks not supported unless a server emulator bypass exists</li>
               <li>The Enigma Protector DRM is not fully supported</li>
               <li>Denuvo games depend on availability on our end</li>
+              <li>We do not serve customers from other resellers</li>
             </ul>
           </section>
 
@@ -341,7 +343,9 @@
       <a href="https://wise.com/pay/me/barryh669" target="_blank" class="mobile-action-btn mobile-action-purchase">
         💳 Purchase App
       </a>
-
+      <a id="emailBtnMobile" href="mailto:3circledesign@gmail.com" class="mobile-action-btn mobile-action-email">
+        📧 Email Us
+      </a>
     </div>
 
     <div id="pagination-container" class="pagination-container">
@@ -357,10 +361,10 @@
       hostedButtonId: "HXJHP8F87YQC6",
     }).render("#paypal-container-HXJHP8F87YQC6")
   </script>
-  <!-- Floating WhatsApp CTA -->
-  <a id="whatsappBtn"
-    href="https://wa.me/60138254541?text=Hi%20Barry,%20I%20am%20interested%20in%20Steam%20Unlock%20Onennabe!"
-    target="_blank" class="whatsapp-btn">💬 WhatsApp Us</a>
+  <!-- Floating Email CTA -->
+  <a id="emailBtn"
+    href="mailto:3circledesign@gmail.com"
+    class="email-btn">📧 Email Us</a>
 
   <!-- Floating Purchase CTA -->
   <a href="https://wise.com/pay/me/barryh669" target="_blank" class="purchase-link" id="purchaseCta">
@@ -370,7 +374,7 @@
 
   <!-- Manual receipt mini prompt -->
   <div class="receipt-toast" id="receiptToast" aria-live="polite">
-    <h4>Add receipt to WhatsApp?</h4>
+    <h4>Add receipt to Email?</h4>
     <div class="receipt-row">
       <input type="text" id="receiptInput" placeholder="Enter receipt / transaction ID">
       <button id="receiptSaveBtn">Save</button>
