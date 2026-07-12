@@ -509,6 +509,7 @@ function setupNavigation() {
 
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
+      if (link.classList.contains('external')) return;
       e.preventDefault();
 
       // 1. Remove active class from all links
