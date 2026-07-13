@@ -22,12 +22,12 @@ theme:
     - search.suggest
     - content.code.copy
 
+extra_javascript:
+  - javascripts/translate.js
+
 extra_css:
   - stylesheets/steam-theme.css
   - stylesheets/translate.css
-
-extra_javascript:
-  - javascripts/translate.js
 
 nav:
   - Home: index.md
@@ -50,6 +50,8 @@ nav:
     - Hypervisor Games: hypervisor.md
   - Help, my game is not unlocking!!:
     - Troubleshooting: troubleshooting.md
+    - Cannot Connect to Server: cannot-connect-to-server.md
+  - OpenSteamTool Errors: opensteamtool-errors.md
 
 markdown_extensions:
   - admonition
