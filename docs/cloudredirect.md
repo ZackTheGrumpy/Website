@@ -1,8 +1,8 @@
 # CloudRedirect Documentation
 
-## 🛠️ Step 1: Initial Configuration
+## 🛠️ Configuration
 
-1. Open **CloudRedirect**.
+1. Open **CloudRedirect** or click **Launch** from SUO ➜ Tools.
 2. Go to **Setup** and click "Deploy DLL".
 3. Click **Configuration Provider ➜ Enable** on the popup.
 4. Select Provider **Google Drive** then click **Sign In**.
