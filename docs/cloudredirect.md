@@ -14,4 +14,4 @@
 <img width="789" height="476" alt="Image" src="https://raw.githubusercontent.com/ZackTheGrumpy/Website/main/docs/Screenshot%204026-08-08%20165443.png" />
 
 !!! warning "Troubleshooting"
-    If you are unable to click the patch button, go to **[SUO > Tools > Reinstall Steam]**, then attempt to run the patch again.
+    If you are unable to click the patch button, go to **[SUO > Tools > Reinstall Steam]**, then attempt to run the patch again.
