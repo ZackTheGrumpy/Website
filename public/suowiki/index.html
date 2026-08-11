@@ -1389,7 +1389,11 @@ function renderReader(id) {
 
   // Configure marked
   marked.setOptions({ breaks: true, gfm: true });
-  const html = marked.parse(t.content || '');
+  let html = marked.parse(t.content || '');
+  
+  // Fix relative asset paths because the images are now in tutorials/assets/
+  html = html.replace(/(src|href)="assets\//g, '$1="tutorials/assets/');
+  
   const contentEl = document.getElementById('reader-content');
   contentEl.innerHTML = html;
 
