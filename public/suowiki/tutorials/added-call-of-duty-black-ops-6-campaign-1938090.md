@@ -1,4 +1,4 @@
-\---
+---
 
 game: Call of Duty®: Black Ops 6 - Campaign - 1938090
 author: ProSub 
