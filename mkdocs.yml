@@ -52,6 +52,7 @@ nav:
     - Troubleshooting: troubleshooting.md
     - Cannot Connect to Server: cannot-connect-to-server.md
   - OpenSteamTool Errors: opensteamtool-errors.md
+  - Patch Wiki: https://steamunlockonennabe.click/suowiki/
 
 markdown_extensions:
   - admonition
