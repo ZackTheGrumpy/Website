@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PatchWiki — Online Patch & Game Bypass Guides</title>
+<link rel="icon" type="image/x-icon" href="steamunlock_wannabe.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- marked.js for markdown rendering -->
@@ -1383,6 +1384,7 @@ function renderReader(id) {
     <div class="reader-meta-item">🎮 ${t.game}</div>
     ${t.version ? `<div class="reader-meta-item">🔧 ${t.version}</div>` : ''}
     <div class="reader-meta-item">📅 ${t.date}</div>
+    <a href="https://github.com/ZackTheGrumpy/Website/edit/main/public/suowiki/tutorials/${t.id}.md" target="_blank" class="btn btn-ghost" style="margin-left: auto; padding: 4px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">✏️ Community Edit</a>
   `;
 
   // Configure marked
