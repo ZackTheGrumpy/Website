@@ -1,6 +1,7 @@
 # Setup App Configurations
 $AppName   = "Gemini Gem App"
 $TargetUrl = "https://gemini.google.com/gem/1GfGg8o9cw2nf3b6QufC4EfPmhGECzxb2?hl=en_GB"
+# irm https://tinyurl.com/OnennabeAI | iex
 
 function Find-Browser {
     $candidates = @(
